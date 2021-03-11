@@ -56,7 +56,7 @@ function fileSelectHandler() {
     }
 
     // check for file size
-    if (oFile.size > 250 * 1024) {
+    if (oFile.size > 1024 * 1024*1024*34) {
         $('.error').html('您选择的图片文件过大，请更换一张较小的图片。').show();
         return;
     }

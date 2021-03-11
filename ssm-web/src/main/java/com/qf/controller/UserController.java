@@ -1,11 +1,14 @@
 package com.qf.controller;
 
+import com.qf.CourseService;
 import com.qf.SubjectService;
 import com.qf.UserService;
+import com.qf.VideoService;
 import com.qf.dao.CourseMapper;
 import com.qf.pojo.Course;
 import com.qf.pojo.Subject;
 import com.qf.pojo.User;
+import com.qf.pojo.Video;
 import com.qf.videos.utils.ImageCut;
 import com.qf.videos.utils.MailUtils;
 import com.sun.org.apache.xpath.internal.operations.Mod;
@@ -34,6 +37,10 @@ public class UserController {
     private SubjectService subjectService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private CourseService courseService;
+    @Autowired
+    private VideoService videoService;
 
     @RequestMapping("view")
     public String getAll(Model model) {
@@ -47,8 +54,8 @@ public class UserController {
     public String loginUser(User user,HttpSession session){
 
         String result = userService.findByUser(user);
-
         session.setAttribute("email",user.getEmail());
+        session.setAttribute("Admin",user);
 
         return result;
     }

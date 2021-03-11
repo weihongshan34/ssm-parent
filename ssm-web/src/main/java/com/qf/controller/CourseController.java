@@ -22,13 +22,9 @@ public class CourseController {
     @Autowired
     private SubjectMapper subjectMapper;
     @RequestMapping("course/{subjectId}")
-    public String findBySid(@PathVariable int subjectId, Model model, HttpSession session){
+    public String findBySid(@PathVariable int subjectId, Model model){
         List<Course> courseList = courseService.findBySid(subjectId);
         model.addAttribute("courseList",courseList);
-
-
-        User admin = (User)session.getAttribute("Admin");
-
         Subject subject = subjectMapper.selectByPrimaryKey(subjectId);
         subject.setCourseList(courseList);
         model.addAttribute("subject",subject);

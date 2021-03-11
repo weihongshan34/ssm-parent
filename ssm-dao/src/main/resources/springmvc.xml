@@ -18,6 +18,8 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/video/*"/>
+            <mvc:exclude-mapping path="/video/showVideo"/>
+            <mvc:exclude-mapping path="/video/updatePlayNum"/>
            <bean class="com.qf.interceptor.Interceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>

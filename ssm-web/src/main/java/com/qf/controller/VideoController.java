@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -91,27 +92,30 @@ public class VideoController {
     }
 
     @RequestMapping("showVideo")
-    public  String showVideo(int videoId ,String subjectName,Model model) {
-        List<Course> courseList = courseService.findAll();
+    public  String showVideo(int videoId , String subjectName, Model model,HttpSession session) {
+        System.out.println("---------------------------------");
+        String email = (String) session.getAttribute("email");
+        System.out.println(email);
+        System.out.println(session.toString());
+        System.out.println("---------------------------------");
 
+
+        List<Course> courseList = courseService.findAll();
         List<Subject> subjectList = subjectService.getAll();
         Video video = videoService.selectById(videoId);
         video.setPlayNum(video.getPlayNum()+1);
         videoService.updateById(video);
-
         int courseId = video.getCourseId();
-
         Course course = courseService.findByid(courseId);
         List<Video> videoList = course.getVideoList();
 
         model.addAttribute("courseList",courseList);
         model.addAttribute("subjectList",subjectList);
         model.addAttribute("video",video);
-
+        model.addAttribute("videoList",videoList);
         model.addAttribute("subjectName",subjectName);
         model.addAttribute("course",course);
         return  "/before/section.jsp";
-
     }
 
 
@@ -121,7 +125,7 @@ public class VideoController {
 
 
         Video video = videoService.selectById(id);
-
+        video.setPlayNum(playNum+1);
         videoService.updateById(video);
 
     }
